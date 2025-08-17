@@ -14,9 +14,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
-      <body className={`${outfit.variable} antialiased`}>
-        <Navbar />
+    <html lang="pt-BR" suppressHydrationWarning>
+      <body
+        className={`${outfit.variable} min-h-dvh bg-[var(--background)] text-[var(--text)] antialiased`}
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>
