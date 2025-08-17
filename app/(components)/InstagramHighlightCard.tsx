@@ -172,7 +172,7 @@ function Slide({ post, index }: { post: InstaPost; index: number }) {
         <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-3">
           <p className="line-clamp-2 max-w-[70%] text-sm text-white/90">{post.caption ?? ""}</p>
           <a
-            href={post.permalink}
+            href="https://www.instagram.com/mariaduda_tattoo/"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-white/60 bg-white/80 px-3 py-1 text-xs font-semibold text-[var(--text)] hover:bg-white"
