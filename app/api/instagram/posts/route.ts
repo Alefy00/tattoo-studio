@@ -29,5 +29,29 @@ export async function GET() {
       permalink: "https://instagram.com/",
       caption: "Detalhe delicado no pulso.",
     },
+        {
+      id: "4",
+      media_type: "IMAGE",
+      media_url: "/portfolio/post1.png",
+      thumbnail_url: null,
+      permalink: "https://instagram.com/",
+      caption: "Projeto floral em fine line 🌸",
+    },
+    {
+      id: "5",
+      media_type: "IMAGE",
+      media_url: "/portfolio/post2.png",
+      thumbnail_url: null,
+      permalink: "https://instagram.com/",
+      caption: "Dia de estúdio ✨",
+    },
+    {
+      id: "6",
+      media_type: "IMAGE",
+      media_url: "/portfolio/post3.png",
+      thumbnail_url: null,
+      permalink: "https://instagram.com/",
+      caption: "Detalhe delicado no pulso.",
+    },
   ]);
 }
