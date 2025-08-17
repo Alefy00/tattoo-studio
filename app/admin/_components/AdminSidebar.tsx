@@ -17,7 +17,7 @@ export default function AdminSidebar() {
     <div className="sticky top-0 h-dvh border-r border-black/10 bg-[var(--primary)] p-4">
       <div className="mb-6 px-2">
         <div className="text-xs font-semibold uppercase opacity-70">Painel</div>
-        <div className="text-lg font-bold">Tatuadora • Admin</div>
+        <div className="text-lg font-bold">Duda • Admin</div>
       </div>
       <nav className="space-y-1">
         {items.map((item) => {

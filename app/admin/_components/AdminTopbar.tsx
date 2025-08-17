@@ -58,7 +58,6 @@ export default function AdminTopbar() {
             <Link href="/admin/schedule" className="rounded-lg bg-white/70 px-3 py-2 text-sm font-semibold">Agenda</Link>
             <Link href="/admin/clients" className="rounded-lg bg-white/70 px-3 py-2 text-sm font-semibold">Clientes</Link>
             <Link href="/admin/contracts" className="rounded-lg bg-white/70 px-3 py-2 text-sm font-semibold">Contratos</Link>
-            <Link href="/admin/settings" className="rounded-lg bg-white/70 px-3 py-2 text-sm font-semibold">Configurações</Link>
           </nav>
         </div>
       )}
