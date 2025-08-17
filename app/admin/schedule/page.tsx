@@ -1,19 +1,42 @@
-// app/admin/schedule/page.tsx
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import CalendarMonth from "../_components/CalendarMonth";
 import AdminModal from "../_components/AdminModal";
 
 type Slot = { time: string; client?: string; note?: string };
-
 const DEFAULT_SLOTS = ["10:00","13:30","16:00","18:30"];
 
 export default function AdminSchedulePage() {
+  const search = useSearchParams();
+  const router = useRouter();
+
   const [selectedDay, setSelectedDay] = useState<Date | null>(new Date());
   const [slots, setSlots] = useState<Record<string, Slot[]>>({});
   const [newOpen, setNewOpen] = useState(false);
   const [draft, setDraft] = useState<Slot>({ time: "10:00", client: "", note: "" });
+
+  // 👉 aplica query params: day (YYYY-MM-DD), open=new, client, time
+  useEffect(() => {
+    const qDay = search.get("day");
+    const qOpen = search.get("open");
+    const qClient = search.get("client");
+    const qTime = search.get("time");
+
+    if (qDay) {
+      const d = new Date(qDay + "T00:00:00");
+      if (!isNaN(d.valueOf())) setSelectedDay(d);
+    }
+    if (qClient) setDraft((prev) => ({ ...prev, client: decodeURIComponent(qClient) }));
+    if (qTime) setDraft((prev) => ({ ...prev, time: qTime }));
+
+    if (qOpen === "new") setNewOpen(true);
+
+    // limpa a URL (opcional, só pra não ficar com query pendurada)
+    // setTimeout(() => router.replace("/admin/schedule"), 300);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // roda uma vez
 
   const key = useMemo(() => selectedDay?.toISOString().slice(0,10) ?? "", [selectedDay]);
   const daySlots = slots[key] ?? DEFAULT_SLOTS.map((t) => ({ time: t }));
@@ -64,7 +87,7 @@ export default function AdminSchedulePage() {
         </div>
       </aside>
 
-      {/* Modal novo horário (visual) */}
+      {/* Modal novo horário */}
       <AdminModal
         open={newOpen}
         onClose={() => setNewOpen(false)}
@@ -102,7 +125,7 @@ export default function AdminSchedulePage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium">Cliente (opcional)</label>
+            <label className="mb-1 block text-sm font-medium">Cliente</label>
             <input
               type="text"
               value={draft.client}
@@ -112,10 +135,10 @@ export default function AdminSchedulePage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium">Observação (opcional)</label>
+            <label className="mb-1 block text-sm font-medium">Observação</label>
             <input
               type="text"
-              value={draft.note}
+              value={draft.note ?? ""}
               onChange={(e)=> setDraft({ ...draft, note: e.target.value })}
               placeholder="Ex.: Fine line, 5cm, antebraço"
               className="w-full rounded-xl border border-black/15 bg-white px-3 py-2"

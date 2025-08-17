@@ -1,14 +1,20 @@
 // app/admin/contracts/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminModal from "../_components/AdminModal";
+import { useSearchParams } from "next/navigation";
 
 type Template = { id: string; title: string; updatedAt: string };
 const TEMPLATES: Template[] = [
   { id: "t1", title: "Contrato padrão — pequenas", updatedAt: "2025-07-20" },
   { id: "t2", title: "Contrato blackwork — médios", updatedAt: "2025-06-05" },
 ];
+
+const DEFAULT_BODY = `1) O cliente confirma estar ciente das condições de higiene e cuidados no pós-tatuagem.
+2) Em caso de alteração de data, avisar com 48h de antecedência.
+3) O sinal garante a reserva e é abatido do valor final.
+4) Correções pequenas podem ser avaliadas após a cicatrização (4–6 semanas).`;
 
 export default function AdminContractsPage() {
   const [openNew, setOpenNew] = useState(false);
@@ -18,6 +24,20 @@ export default function AdminContractsPage() {
   const [price, setPrice] = useState("R$ 600,00");
   const [deposit, setDeposit] = useState("R$ 100,00");
   const [client, setClient] = useState("");
+  const search = useSearchParams();
+
+
+    // 👉 abre o composer se vier compose e client
+  useEffect(() => {
+    const compose = search.get("compose");
+    const c = search.get("client");
+    if (compose) {
+      const tpl = TEMPLATES.find(t => t.id === compose);
+      if (tpl) setTitle(tpl.title);
+      if (c) setClient(decodeURIComponent(c));
+      setOpenNew(true);
+    }
+  }, [search]);
 
   return (
     <div className="space-y-4">
@@ -183,7 +203,3 @@ export default function AdminContractsPage() {
   );
 }
 
-const DEFAULT_BODY = `1) O cliente confirma estar ciente das condições de higiene e cuidados no pós-tatuagem.
-2) Em caso de alteração de data, avisar com 48h de antecedência.
-3) O sinal garante a reserva e é abatido do valor final.
-4) Correções pequenas podem ser avaliadas após a cicatrização (4–6 semanas).`;
