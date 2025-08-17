@@ -4,6 +4,7 @@ import "../globals.css";
 import AdminSidebar from "./_components/AdminSidebar";
 import AdminTopbar from "./_components/AdminTopbar";
 import { Outfit } from "next/font/google";
+import AdminGuard from "./_components/AdminGuard";
 
 
 
@@ -22,7 +23,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
       <main className="relative">
         <AdminTopbar />
-        <div className="mx-auto max-w-6xl px-4 py-6">{children}</div>
+        <div className="mx-auto max-w-6xl px-4 py-6">
+          <AdminGuard>{children}</AdminGuard>
+        </div>
       </main>
     </div>
   );

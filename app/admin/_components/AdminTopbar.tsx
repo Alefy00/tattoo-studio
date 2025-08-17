@@ -1,10 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { getUserName, signOut } from "../lib/auth";
+import { useRouter } from "next/navigation";
 
 export default function AdminTopbar() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const [name, setName] = useState<string>("");
+
+    useEffect(() => {
+    setName(getUserName() ?? "Duda");
+  }, []);
+
 
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)]/80 backdrop-blur">
@@ -28,9 +37,16 @@ export default function AdminTopbar() {
           >
             Ver site
           </Link>
-          <button className="rounded-full bg-[var(--secondary)] px-3 py-1.5 text-xs font-semibold hover:opacity-90">
+          <button
+            onClick={() => {
+              signOut();
+              router.replace("/login");
+            }}
+            className="rounded-full bg-[var(--secondary)] px-3 py-1.5 text-xs font-semibold hover:opacity-90"
+          >
             Sair
           </button>
+
         </div>
       </div>
 
